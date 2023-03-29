@@ -1,0 +1,48 @@
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace NotesUwpTask.Model
+{
+    public class Note : INotifyPropertyChanged
+    {
+        public int Id { get; private set; }
+        private string _title;
+        private string _description;
+
+        public string Title
+        {
+            get { return _title; }
+
+            set
+            {
+                _title = value;
+                OnPropertyChange();
+            }
+        }
+
+        public string Description
+        {
+            get { return _description; }
+
+            set
+            {
+                _description = value;
+                OnPropertyChange();
+            }
+        }
+
+        public Note(string title = null, string description = null)
+        {
+            Title = title;
+            Description = description;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChange([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+    }
+}
