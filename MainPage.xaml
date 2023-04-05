@@ -13,7 +13,7 @@
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="NotesList" ItemsSource="{Binding Notes}" Margin="10" BorderBrush="Black" >
+        <ListView x:Name="NotesList" ItemsSource="{Binding Notes}" Margin="10" BorderBrush="Black">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -34,7 +34,6 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

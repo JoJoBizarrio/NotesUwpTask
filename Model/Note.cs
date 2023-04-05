@@ -37,6 +37,13 @@ namespace NotesUwpTask.Model
             Description = description;
         }
 
+        public Note(int id, string title = "", string description = "")
+        {
+            Id = id;
+            Title = title;
+            Description = description;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChange([CallerMemberName] string propertyName = "")

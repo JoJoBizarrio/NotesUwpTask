@@ -13,11 +13,11 @@
         
         <TextBlock Text="Title:" Margin="15,10,15,0"/>
         
-        <TextBox Text="{Binding NewNote.Title}" Margin="10,0,10,10" TextWrapping="Wrap"/>
+        <TextBox Text="{Binding Title, Mode=TwoWay}" Margin="10,0,10,10" TextWrapping="Wrap"/>
         
         <TextBlock Text="Description:" Margin="15,10,15,0"/>
 
-        <TextBox Text="{Binding NewNote.Description}" Margin="10,0,10,0" TextWrapping="Wrap" MinHeight="96"/>
+        <TextBox Text="{Binding Description, Mode=TwoWay}" Margin="10,0,10,0" TextWrapping="Wrap" MinHeight="96"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
             <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Command="{Binding AddCommand}">

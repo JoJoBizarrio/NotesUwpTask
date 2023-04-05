@@ -25,19 +25,17 @@ namespace NotesUwpTask.ViewModel
         {
             _notesDataBase.Database.EnsureCreated();
             _notesDataBase.Notes.Load();
-            _notesDataBase.Notes.Add(new Note("newNote1", "desc"));
-            _notesDataBase.SaveChanges();
             Notes = _notesDataBase.Notes.Local.ToObservableCollection();
         }
 
-        public RelayCommand AddCommnad
+        public RelayCommand NewCommand
         {
             get
             {
                 return _addCommand ??
                     (_addCommand = new RelayCommand(obj =>
                     {
-                        NavigationService.Instance.Navigate(typeof(NoteCreatingPage));
+                        NavigationService.Instance.Navigate(typeof(NoteCreatingPage), new AddViewModel());
                     }));
             }
         }
@@ -49,7 +47,9 @@ namespace NotesUwpTask.ViewModel
                 return _editCommand ??
                     (_editCommand = new RelayCommand(obj =>
                     {
-                        NavigationService.Instance.Navigate(typeof(NoteEditingPage), (Note)obj);
+                        Note note = (Note)obj;
+                        EditViewModel viewModel = new EditViewModel(note);
+                        NavigationService.Instance.Navigate(typeof(NoteEditingPage), viewModel);
                     }));
             }
         }
@@ -63,11 +63,25 @@ namespace NotesUwpTask.ViewModel
                     Note deletedNote = obj as Note;
                     if (deletedNote != null)
                     {
-                        _notesDataBase.Notes.Remove(deletedNote);
+                        _notesDataBase.Remove(deletedNote);
                         _notesDataBase.SaveChanges();
                     }
                 }));
             }
+        }
+
+        public void AddNote(Note newNote)
+        {
+            _notesDataBase.Add(newNote);
+            _notesDataBase.SaveChanges();
+        }
+
+        public void UpdateNote(Note updatedNote)
+        {
+            Note temp = _notesDataBase.Notes.Where(note => note.Id == updatedNote.Id).First();
+            temp.Title = updatedNote.Title;
+            temp.Description = updatedNote.Description;
+            _notesDataBase.SaveChanges();
         }
     }
 }

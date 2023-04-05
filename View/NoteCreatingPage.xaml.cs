@@ -32,7 +32,7 @@ namespace NotesUwpTask.View
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            DataContext = (AddViewModel)e.Content;
+            DataContext = (AddViewModel)e.Parameter;
         }
     }
 }

@@ -27,8 +27,15 @@ namespace NotesUwpTask
         public MainPage()
         {
             this.InitializeComponent();
+            
         }
 
-
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (e.Parameter != null && e.Parameter is MainViewModel model)
+            {
+                DataContext = model;
+            }
+        }
     }
 }
