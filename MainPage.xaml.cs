@@ -27,17 +27,8 @@ namespace NotesUwpTask
         public MainPage()
         {
             this.InitializeComponent();
-            DataContext = new ApplicationViewModel();
         }
 
-        private void EditNote_Click(object sender, ItemClickEventArgs e)
-        {
 
-        }
-
-        private void AddNote_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(NoteCreatingPage));
-        }
     }
 }

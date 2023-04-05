@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NotesUwpTask.Model;
+using NotesUwpTask.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,9 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace NotesUwpTask.ViewModel
 {
-    internal class ApplicationViewModel
+    internal class MainViewModel
     {
         ApplicationContext _notesDataBase = new ApplicationContext();
 
@@ -19,13 +21,12 @@ namespace NotesUwpTask.ViewModel
 
         public ObservableCollection<Note> Notes { get; set; }
 
-        public ApplicationViewModel()
+        public MainViewModel()
         {
             _notesDataBase.Database.EnsureCreated();
             _notesDataBase.Notes.Load();
-            _notesDataBase.Notes.Add(new Note("1", "desc"));
-            _notesDataBase.Notes.Add(new Note("1", "desc"));
-            _notesDataBase.Notes.Add(new Note("1", "desc"));
+            _notesDataBase.Notes.Add(new Note("newNote1", "desc"));
+            _notesDataBase.SaveChanges();
             Notes = _notesDataBase.Notes.Local.ToObservableCollection();
         }
 
@@ -36,7 +37,7 @@ namespace NotesUwpTask.ViewModel
                 return _addCommand ??
                     (_addCommand = new RelayCommand(obj =>
                     {
-
+                        NavigationService.Instance.Navigate(typeof(NoteCreatingPage));
                     }));
             }
         }
@@ -48,7 +49,7 @@ namespace NotesUwpTask.ViewModel
                 return _editCommand ??
                     (_editCommand = new RelayCommand(obj =>
                     {
-
+                        NavigationService.Instance.Navigate(typeof(NoteEditingPage), (Note)obj);
                     }));
             }
         }
@@ -57,11 +58,15 @@ namespace NotesUwpTask.ViewModel
         {
             get
             {
-                return _deleteCommand ??
-                    (_deleteCommand = new RelayCommand(obj =>
+                return _deleteCommand ?? (_deleteCommand = new RelayCommand(obj =>
+                {
+                    Note deletedNote = obj as Note;
+                    if (deletedNote != null)
                     {
-
-                    }));
+                        _notesDataBase.Notes.Remove(deletedNote);
+                        _notesDataBase.SaveChanges();
+                    }
+                }));
             }
         }
     }

@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using NotesUwpTask.Model;
+using Windows.Graphics.Display;
+using NotesUwpTask.ViewModel;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,6 +28,11 @@ namespace NotesUwpTask.View
         public NoteCreatingPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DataContext = (AddViewModel)e.Content;
         }
     }
 }
