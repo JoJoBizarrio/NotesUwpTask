@@ -36,17 +36,33 @@ namespace NotesUwpTask.ViewModel
                 return _addCommand ??
                     (_addCommand = new RelayCommand(obj =>
                     {
-                        Note addedNote = obj as Note;
 
-                        if (addedNote != null)
-                        {
-                            Notes.Add(addedNote);
-                        }
                     }));
             }
         }
 
-        public RelayCommand EditCommand { get { return _editCommand; } }
-        public RelayCommand DeleteCommand { get { return _deleteCommand; } }
+        public RelayCommand EditCommand
+        {
+            get
+            {
+                return _editCommand ??
+                    (_editCommand = new RelayCommand(obj =>
+                    {
+
+                    }));
+            }
+        }
+
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                return _deleteCommand ??
+                    (_deleteCommand = new RelayCommand(obj =>
+                    {
+
+                    }));
+            }
+        }
     }
 }

@@ -27,15 +27,5 @@ namespace NotesUwpTask.View
         {
             this.InitializeComponent();
         }
-
-        private void Accept_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
-        }
     }
 }
