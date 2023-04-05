@@ -127,6 +127,7 @@
     <Compile Include="Model\NotesList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
+    <Compile Include="ViewModel\NavigationService.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="View\NoteCreatingPage.xaml.cs">
       <DependentUpon>NoteCreatingPage.xaml</DependentUpon>
