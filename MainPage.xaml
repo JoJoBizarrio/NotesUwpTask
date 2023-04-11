@@ -5,6 +5,7 @@
     xmlns:local="using:NotesUwpTask"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:NotesUwpTask.Model"
     mc:Ignorable="d" >
 
     <Grid Background="White">
@@ -13,14 +14,12 @@
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="NotesList" ItemsSource="{Binding Notes}" Margin="10" BorderBrush="Black">
-            <ListView.ItemTemplate>
-                <DataTemplate>
+        <ListView x:Name="NotesList" ItemsSource="{x:Bind ViewModel.Notes}" Margin="10" BorderBrush="Black" IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ListViewItemClick}">
+            <ListView.ItemTemplate> 
+                <DataTemplate x:DataType="model:Note">
                     <Grid>
-                        <Button 
-                            Content="{Binding Title}" 
-                            Command="{Binding ElementName=NotesList, Path=DataContext.EditCommand}" 
-                            CommandParameter="{Binding}" 
+                        <TextBlock
+                            Text="{x:Bind Title}" 
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Center"/>
                         <Button 
@@ -42,7 +41,7 @@
         </ListView>
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button MinWidth="50" Margin="10" Command="{Binding NewCommand}">
+            <Button MinWidth="50" Margin="10" Command="{x:Bind ViewModel.NewCommand}">
                 <SymbolIcon Symbol="Add"/>
             </Button>
         </StackPanel>

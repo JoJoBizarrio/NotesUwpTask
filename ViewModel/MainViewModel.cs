@@ -7,11 +7,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Windows.UI.Xaml.Controls;
 
 namespace NotesUwpTask.ViewModel
 {
-    internal class MainViewModel
+    public class MainViewModel
     {
         ApplicationContext _notesDataBase = new ApplicationContext();
 
@@ -82,6 +82,16 @@ namespace NotesUwpTask.ViewModel
             temp.Title = updatedNote.Title;
             temp.Description = updatedNote.Description;
             _notesDataBase.SaveChanges();
+        }
+
+        public void ListViewItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem != null)
+            {
+                Note note = (Note)e.ClickedItem;
+                EditViewModel viewModel = new EditViewModel(note);
+                NavigationService.Instance.Navigate(typeof(NoteEditingPage), viewModel);
+            }
         }
     }
 }
