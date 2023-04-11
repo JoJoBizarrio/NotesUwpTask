@@ -5,7 +5,7 @@ namespace NotesUwpTask.Model
 {
     public class Note : INotifyPropertyChanged
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         private string _title;
         private string _description;
 
@@ -31,8 +31,15 @@ namespace NotesUwpTask.Model
             }
         }
 
-        public Note(string title = null, string description = null)
+        public Note(string title = "", string description = "")
         {
+            Title = title;
+            Description = description;
+        }
+
+        public Note(int id, string title = "", string description = "")
+        {
+            Id = id;
             Title = title;
             Description = description;
         }

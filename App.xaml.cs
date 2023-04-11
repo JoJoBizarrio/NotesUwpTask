@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NotesUwpTask.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -67,6 +68,7 @@ namespace NotesUwpTask
                     // настройка новой страницы путем передачи необходимой информации в качестве параметра
                     // навигации
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    ((MainPage)rootFrame.Content).DataContext = new MainViewModel();
                 }
                 // Обеспечение активности текущего окна
                 Window.Current.Activate();

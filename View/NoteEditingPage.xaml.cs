@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using NotesUwpTask.Model;
+using NotesUwpTask.ViewModel;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -23,19 +24,17 @@ namespace NotesUwpTask.View
     /// </summary>
     public sealed partial class NoteEditingPage : Page
     {
-        public NoteEditingPage(Note editingNote)
+        public NoteEditingPage()
         {
             this.InitializeComponent();
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Frame.GoBack();
-        }
-
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
+            if (e.Parameter != null && e.Parameter is EditViewModel model)
+            {
+                DataContext = model;
+            }
         }
     }
 }

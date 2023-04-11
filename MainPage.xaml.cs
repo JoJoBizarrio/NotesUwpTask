@@ -27,17 +27,15 @@ namespace NotesUwpTask
         public MainPage()
         {
             this.InitializeComponent();
-            DataContext = new ApplicationViewModel();
+            
         }
 
-        private void EditNote_Click(object sender, ItemClickEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
-        }
-
-        private void AddNote_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(NoteCreatingPage));
+            if (e.Parameter != null && e.Parameter is MainViewModel model)
+            {
+                DataContext = model;
+            }
         }
     }
 }
