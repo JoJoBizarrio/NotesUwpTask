@@ -8,13 +8,13 @@
     xmlns:model="using:NotesUwpTask.Model"
     mc:Ignorable="d" >
 
-    <Grid Background="White">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="NotesList" ItemsSource="{x:Bind ViewModel.Notes}" Margin="10" BorderBrush="Black" IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ListViewItemClick}">
+        <ListView x:Name="NotesList" ItemsSource="{x:Bind ViewModel.Notes, Mode=OneWay}" Margin="10" BorderBrush="Black" IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ListViewItemClick}">
             <ListView.ItemTemplate> 
                 <DataTemplate x:DataType="model:Note">
                     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
