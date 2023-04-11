@@ -67,8 +67,8 @@ namespace NotesUwpTask
                     // Если стек навигации не восстанавливается для перехода к первой странице,
                     // настройка новой страницы путем передачи необходимой информации в качестве параметра
                     // навигации
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                    ((MainPage)rootFrame.Content).DataContext = new MainViewModel();
+                    rootFrame.Navigate(typeof(MainPage), new MainViewModel());
+                   // ((MainPage)rootFrame.Content).DataContext = new MainViewModel();
                 }
                 // Обеспечение активности текущего окна
                 Window.Current.Activate();

@@ -24,6 +24,8 @@ namespace NotesUwpTask
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public MainViewModel ViewModel {  get; set; }
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -34,6 +36,7 @@ namespace NotesUwpTask
         {
             if (e.Parameter != null && e.Parameter is MainViewModel model)
             {
+                ViewModel = model;
                 DataContext = model;
             }
         }
