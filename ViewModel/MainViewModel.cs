@@ -14,11 +14,11 @@ using System.Threading.Tasks;
 using Windows.Foundation.Metadata;
 using Windows.UI.Xaml.Controls;
 
-namespace NotesUwpTask.ViewModel 
+namespace NotesUwpTask.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        ApplicationContext _notesDataBase = new ApplicationContext();
+        private ApplicationContext _notesDataBase = new ApplicationContext();
 
         RelayCommand _addCommand;
         RelayCommand _editCommand;
@@ -26,7 +26,7 @@ namespace NotesUwpTask.ViewModel
         RelayCommand _sortByAlphabet;
 
         private ObservableCollection<Note> _notes { get; set; }
-        public ObservableCollection<Note> Notes 
+        public ObservableCollection<Note> Notes
         {
             get => _notes;
             set
@@ -37,11 +37,11 @@ namespace NotesUwpTask.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName="")
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
+
         public MainViewModel()
         {
             _notesDataBase.Database.EnsureCreated();
@@ -97,12 +97,8 @@ namespace NotesUwpTask.ViewModel
             {
                 return _sortByAlphabet ?? (_sortByAlphabet = new RelayCommand(obj =>
                 {
-                    Notes = new ObservableCollection<Note>(_notesDataBase.Notes.Local.OrderBy(note => note.Title).ToList());
-                    //Notes = new ObservableCollection<Note>(Notes.OrderBy(n => n.Title).ToList());
-                    //Notes.OrderBy(n => n.Title);
-                  //  _notesDataBase.Notes.OrderBy(n => n.Title).ToList();
-
-                    //  _notesDataBase.SaveChanges();
+                    Notes = Note.SortByAlphabet(Notes);
+                   // _notesDataBase.ResetDB(Notes);
                 }));
             }
         }

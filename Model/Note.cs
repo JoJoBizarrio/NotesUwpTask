@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace NotesUwpTask.Model
@@ -49,6 +51,11 @@ namespace NotesUwpTask.Model
         public void OnPropertyChange([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        static public ObservableCollection<Note> SortByAlphabet(ObservableCollection<Note> Notes)
+        {
+            return new ObservableCollection<Note>(Notes.OrderBy(note => note.Title));
         }
     }
 }

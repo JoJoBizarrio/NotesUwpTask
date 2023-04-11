@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+using System.Collections;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NotesUwpTask.Model
 {
@@ -14,7 +12,20 @@ namespace NotesUwpTask.Model
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=notesUwpTask.db");
-            //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        }
+
+        public void ResetDB(ObservableCollection<Note> noteList)
+        {
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
+
+            for (int i = 0; i < noteList.Count; i++)
+            {
+                noteList[i].Id = i;
+            }
+
+            AddRange(noteList);
+            SaveChanges();
         }
     }
 }
