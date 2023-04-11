@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NotesUwpTask.Model;
 using NotesUwpTask.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml.Controls;
 
 namespace NotesUwpTask.ViewModel
@@ -18,9 +23,9 @@ namespace NotesUwpTask.ViewModel
         RelayCommand _addCommand;
         RelayCommand _editCommand;
         RelayCommand _deleteCommand;
+        RelayCommand _sortByAlphabet;
 
         public ObservableCollection<Note> Notes { get; set; }
-
         public MainViewModel()
         {
             _notesDataBase.Database.EnsureCreated();
@@ -70,6 +75,18 @@ namespace NotesUwpTask.ViewModel
             }
         }
 
+        public RelayCommand SortByAlphabet
+        {
+            get
+            {
+                return _sortByAlphabet ?? (_sortByAlphabet = new RelayCommand(obj =>
+                {
+                    Notes = new ObservableCollection<Note>(_notesDataBase.Notes.Local.OrderBy(note => note.Title).ToList());
+                    _notesDataBase.SaveChanges();
+                }));
+            }
+        }
+
         public void AddNote(Note newNote)
         {
             _notesDataBase.Add(newNote);
@@ -93,5 +110,6 @@ namespace NotesUwpTask.ViewModel
                 NavigationService.Instance.Navigate(typeof(NoteEditingPage), viewModel);
             }
         }
+
     }
 }
