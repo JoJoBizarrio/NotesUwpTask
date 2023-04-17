@@ -1,17 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NotesUwpTask.Model;
 using NotesUwpTask.View;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Foundation.Metadata;
 using Windows.UI.Xaml.Controls;
 
 namespace NotesUwpTask.ViewModel
@@ -96,6 +89,7 @@ namespace NotesUwpTask.ViewModel
                     Note deletedNote = obj as Note;
                     if (deletedNote != null)
                     {
+                         Notes.Remove(deletedNote);
                         _notesDataBase.Remove(deletedNote);
                         _notesDataBase.SaveChanges();
                     }
@@ -109,8 +103,7 @@ namespace NotesUwpTask.ViewModel
             {
                 return _sortByAlphabet ?? (_sortByAlphabet = new RelayCommand(obj =>
                 {
-                    Notes = Note.SortByAlphabet(Notes);
-                    _notesDataBase.SaveChanges();
+                    Notes = new ObservableCollection<Note>(_notesDataBase.Notes.OrderBy(n => n.Title).ToList());
                 }));
             }
         }
