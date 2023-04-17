@@ -29,8 +29,8 @@
                             VerticalAlignment="Center"/>
                         <Button 
                             Grid.Column="1"
-                            Command="{Binding ElementName=NotesList, Path=DataContext.DeleteCommand}" 
-                            CommandParameter="{Binding}"  
+                            Command="{Binding ElementName=NotesList, Path=DataContext.DeleteCommand, Mode=OneWay}" 
+                            CommandParameter="{Binding Mode=OneWay}"  
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right">
                             <SymbolIcon Symbol="Delete"/>

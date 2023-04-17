@@ -57,6 +57,11 @@ namespace NotesUwpTask.ViewModel
                         note.Title = "Empty title's note";
                     }
 
+                    if (string.IsNullOrEmpty(note.Description))
+                    {
+                        note.Description = "";
+                    }
+
                     MainViewModel mainViewModel = new MainViewModel();
                     mainViewModel.AddNote(note);
                     NavigationService.Instance.Navigate(typeof(MainPage), mainViewModel);

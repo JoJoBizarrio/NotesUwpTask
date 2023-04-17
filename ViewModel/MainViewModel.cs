@@ -19,6 +19,18 @@ namespace NotesUwpTask.ViewModel
     public class MainViewModel : INotifyPropertyChanged
     {
         private ApplicationContext _notesDataBase = new ApplicationContext();
+        public ApplicationContext NotesDataBase
+        {
+            get
+            {
+                return _notesDataBase;
+            }
+            set
+            {
+                _notesDataBase = value;
+                OnPropertyChanged("NotesDataBase");
+            }
+        }
 
         RelayCommand _addCommand;
         RelayCommand _editCommand;
@@ -98,17 +110,15 @@ namespace NotesUwpTask.ViewModel
                 return _sortByAlphabet ?? (_sortByAlphabet = new RelayCommand(obj =>
                 {
                     Notes = Note.SortByAlphabet(Notes);
-                   // _notesDataBase.ResetDB(Notes);
+                    _notesDataBase.SaveChanges();
                 }));
             }
         }
 
         public void AddNote(Note newNote)
         {
-            Notes.Add(newNote);
+            _notesDataBase.Add(newNote);
             _notesDataBase.SaveChanges();
-            //_notesDataBase.Add(newNote);
-            //_notesDataBase.SaveChanges();
         }
 
         public void UpdateNote(Note updatedNote)
