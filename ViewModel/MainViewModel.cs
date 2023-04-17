@@ -16,16 +16,32 @@ using Windows.UI.Xaml.Controls;
 
 namespace NotesUwpTask.ViewModel
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
-        ApplicationContext _notesDataBase = new ApplicationContext();
+        private ApplicationContext _notesDataBase = new ApplicationContext();
 
         RelayCommand _addCommand;
         RelayCommand _editCommand;
         RelayCommand _deleteCommand;
         RelayCommand _sortByAlphabet;
 
-        public ObservableCollection<Note> Notes { get; set; }
+        private ObservableCollection<Note> _notes { get; set; }
+        public ObservableCollection<Note> Notes
+        {
+            get => _notes;
+            set
+            {
+                _notes = value;
+                OnPropertyChanged("Notes");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public MainViewModel()
         {
             _notesDataBase.Database.EnsureCreated();
@@ -81,16 +97,18 @@ namespace NotesUwpTask.ViewModel
             {
                 return _sortByAlphabet ?? (_sortByAlphabet = new RelayCommand(obj =>
                 {
-                    Notes = new ObservableCollection<Note>(_notesDataBase.Notes.Local.OrderBy(note => note.Title).ToList());
-                    _notesDataBase.SaveChanges();
+                    Notes = Note.SortByAlphabet(Notes);
+                   // _notesDataBase.ResetDB(Notes);
                 }));
             }
         }
 
         public void AddNote(Note newNote)
         {
-            _notesDataBase.Add(newNote);
+            Notes.Add(newNote);
             _notesDataBase.SaveChanges();
+            //_notesDataBase.Add(newNote);
+            //_notesDataBase.SaveChanges();
         }
 
         public void UpdateNote(Note updatedNote)
