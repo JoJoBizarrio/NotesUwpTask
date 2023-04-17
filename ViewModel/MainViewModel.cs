@@ -1,25 +1,51 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NotesUwpTask.Model;
 using NotesUwpTask.View;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 
 namespace NotesUwpTask.ViewModel
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
-        ApplicationContext _notesDataBase = new ApplicationContext();
+        private ApplicationContext _notesDataBase = new ApplicationContext();
+        public ApplicationContext NotesDataBase
+        {
+            get
+            {
+                return _notesDataBase;
+            }
+            set
+            {
+                _notesDataBase = value;
+                OnPropertyChanged("NotesDataBase");
+            }
+        }
 
         RelayCommand _addCommand;
         RelayCommand _editCommand;
         RelayCommand _deleteCommand;
+        RelayCommand _sortByAlphabet;
 
-        public ObservableCollection<Note> Notes { get; set; }
+        private ObservableCollection<Note> _notes { get; set; }
+        public ObservableCollection<Note> Notes
+        {
+            get => _notes;
+            set
+            {
+                _notes = value;
+                OnPropertyChanged("Notes");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public MainViewModel()
         {
@@ -63,9 +89,21 @@ namespace NotesUwpTask.ViewModel
                     Note deletedNote = obj as Note;
                     if (deletedNote != null)
                     {
+                         Notes.Remove(deletedNote);
                         _notesDataBase.Remove(deletedNote);
                         _notesDataBase.SaveChanges();
                     }
+                }));
+            }
+        }
+
+        public RelayCommand SortByAlphabet
+        {
+            get
+            {
+                return _sortByAlphabet ?? (_sortByAlphabet = new RelayCommand(obj =>
+                {
+                    Notes = new ObservableCollection<Note>(_notesDataBase.Notes.OrderBy(n => n.Title).ToList());
                 }));
             }
         }
@@ -93,5 +131,6 @@ namespace NotesUwpTask.ViewModel
                 NavigationService.Instance.Navigate(typeof(NoteEditingPage), viewModel);
             }
         }
+
     }
 }

@@ -1,11 +1,6 @@
 ﻿using NotesUwpTask.Model;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NotesUwpTask.ViewModel
 {
@@ -55,6 +50,11 @@ namespace NotesUwpTask.ViewModel
                     if (string.IsNullOrEmpty(note.Title))
                     {
                         note.Title = "Empty title's note";
+                    }
+
+                    if (string.IsNullOrEmpty(note.Description))
+                    {
+                        note.Description = "";
                     }
 
                     MainViewModel mainViewModel = new MainViewModel();
