@@ -50,6 +50,5 @@ namespace NotesUwpTask.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

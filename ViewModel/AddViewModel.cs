@@ -1,11 +1,6 @@
 ﻿using NotesUwpTask.Model;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NotesUwpTask.ViewModel
 {
@@ -50,8 +45,20 @@ namespace NotesUwpTask.ViewModel
             {
                 return _addCoomand ?? (_addCoomand = new RelayCommand(obj =>
                 {
+                    Note note = new Note(Title, Description);
+
+                    if (string.IsNullOrEmpty(note.Title))
+                    {
+                        note.Title = "Empty title's note";
+                    }
+
+                    if (string.IsNullOrEmpty(note.Description))
+                    {
+                        note.Description = "";
+                    }
+
                     MainViewModel mainViewModel = new MainViewModel();
-                    mainViewModel.AddNote(new Note(Title, Description));
+                    mainViewModel.AddNote(note);
                     NavigationService.Instance.Navigate(typeof(MainPage), mainViewModel);
                 })); 
             }

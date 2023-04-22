@@ -1,12 +1,6 @@
 ﻿using NotesUwpTask.Model;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace NotesUwpTask.ViewModel
 {
@@ -43,7 +37,7 @@ namespace NotesUwpTask.ViewModel
             }
         }
 
-        public Note ENote { get; set; } 
+        public Note EditableNote { get; set; } 
 
         RelayCommand _saveCommand;
         public RelayCommand SaveCommand
@@ -51,6 +45,12 @@ namespace NotesUwpTask.ViewModel
             get => _saveCommand ?? (_saveCommand = new RelayCommand(obj =>
             {
                 Note note = new Note(Id, Title, Description);
+
+                if (string.IsNullOrEmpty(note.Title))
+                {
+                    note.Title = "Empty title's note";
+                }
+
                 MainViewModel mainViewModel = new MainViewModel();
                 mainViewModel.UpdateNote(note);
                 NavigationService.Instance.Navigate(typeof(MainPage), mainViewModel);
@@ -69,7 +69,7 @@ namespace NotesUwpTask.ViewModel
 
         public EditViewModel(Note note)
         {
-            ENote = note;
+            EditableNote = note;
             Id = note.Id;
             Title = note.Title;
             Description = note.Description;
